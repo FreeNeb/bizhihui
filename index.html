@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>币智慧</title>
+    <meta charset="utf-8"></meta>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css"/>
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/extensions/export/bootstrap-table-export.js"></script>
+
+    <script src="./js/tableExport.js"></script>
+    <script src="./js/bzh-table.js"></script>
+    <script src="./js/reconnecting-websocket.min.js"></script>
+    <script src=lib/nebPay.js></script>
+    <script src=lib/nebulas.js></script>
+    <style>
+        .form-horizontal {
+            display: flex;
+        }
+
+        .form-group {
+            padding: 0 40px;
+            flex: 0 0 50%;
+            margin-bottom: 0;
+        }
+
+        .form-group .form-row {
+            margin-bottom: 15px;
+        }
+
+        .form-group .form-control {
+            width: auto;
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .form-group .form-row .control-label {
+            line-height: 34px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-body" style="padding-bottom:0px;">
+        <h2>币智慧</h2>
+        <div class="noExtension hide" id="noExtension">
+                注意: 请安装 <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">（谷歌浏览器Nebulas钱包扩展）WebExtensionWallet</a>  之后使用
+            </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" id="title">
+            </div>
+            <div class="panel-body">
+                <form id="formSearch" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="control-label" for="txt_search_statu">货币</label>
+                            <input type="text" class="form-control" id="search_asset" value="EOS"/>
+                        </div>
+                        <div class="form-row">
+                            <label class="control-label" for="txt_search_departmentname">类型</label>
+                            <select id="search_ordertype" class="form-control" style="width:172px; padding: 20px 0;" onchange=ordertypeChange()>
+                                <option value="bid">买入单</option>
+                                <option value="ask">卖出单</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label class="control-label" for="txt_search_statu">价格</label>
+                            <input type="text" class="form-control" id="search_price"  oninput="OnInput(event)" onpropertychange="OnPropChanged(event)"/>
+                        </div>
+                        <div class="form-row" style="text-align:left;">
+                            <button type="button" id="btn_query" class="btn btn-primary">启动</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: none;">
+                        <div class="form-row">
+                            <label class="control-label" for="txt_search_departmentname">数量统计结果(个)：</label>
+                            <label class="control-label" for="txt_search_statu" id="quote_total" style="color:blue"></label>
+                        </div>
+                        <div class="form-row">
+                            <label class="control-label" for="txt_search_statu">价值统计结果：</label>
+                            <label class="control-label" for="txt_search_statu" id="base_total" style="color:blue"></label>
+                        </div>
+                        
+                          <!-- <label class="control-label col-sm-2" for="txt_search_statu">CNY价值(≈)：</label>
+                          <label class="control-label col-sm-1" for="txt_search_statu" id="cny_total" style="color:red"></label> -->
+                          <div class="form-row" style="text-align:left;">
+                            <button type="button" id="btn_filter" class="btn btn-primary">按价格过滤</button>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+        </div>       
+        <table id="tb_departments"></table>
+    </div>
+    <div class="modal fade" id="loadingModal">
+        <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+            <div class="progress progress-striped active" style="margin-bottom: 0;">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+            <h5>正在查询...</h5>
+        </div>
+    </div>
+</body>
+<script src="./js/bzh-deal.js"></script>
+</html>

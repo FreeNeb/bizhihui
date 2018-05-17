@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>限价单查询</title>
+    <meta charset="utf-8"></meta>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css"/>
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/extensions/export/bootstrap-table-export.js"></script>
+
+    <script src="./js/tableExport.js"></script>
+    <script src="./js/dhc_table.js"></script>
+     <script src="./js/reconnecting-websocket.min.js"></script>
+    
+</head>
+<body>
+    <div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="title">
+            </div>
+            <div class="panel-body">
+                <form id="formSearch" class="form-horizontal">
+                    <div class="form-group" style="margin-top:15px">
+                            <label class="control-label col-sm-1" for="txt_search_statu">资产</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="search_asset" value="KK_ETH"/>
+                            </div>
+                        <label class="control-label col-sm-1" for="txt_search_departmentname">限价单类型</label>
+                        <div class="col-xs-2" style="margin-top:7px;">
+                            <select id="search_ordertype" style="width:200px" onchange=ordertypeChange()>
+                                <option value="bid">买入限价单</option>
+                                <option value="ask">卖出限价单</option>
+                            </select>
+                        </div>
+                        <label class="control-label col-sm-1" for="txt_search_statu">价格</label>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="search_price"  oninput="OnInput(event)" onpropertychange="OnPropChanged(event)"/>
+                        </div>≈
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="search_price_cny" disabled="disabled"/>
+                        </div>
+                        <div class="col-sm-1" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">开始监控</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:15px">
+                        <label class="control-label col-sm-2" for="txt_search_departmentname">数量统计结果(个)：</label>
+                          <label class="control-label col-sm-1" for="txt_search_statu" id="quote_total" style="color:red"></label>
+                        <label class="control-label col-sm-2" for="txt_search_statu">价值统计结果：</label>
+                          <label class="control-label col-sm-1" for="txt_search_statu" id="base_total" style="color:red"></label>
+                          <label class="control-label col-sm-2" for="txt_search_statu">CNY价值(≈)：</label>
+                          <label class="control-label col-sm-1" for="txt_search_statu" id="cny_total" style="color:red"></label>
+                          <div class="col-sm-2" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_filter" class="btn btn-primary">按价格过滤</button>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+        </div>       
+        <table id="tb_departments"></table>
+    </div>
+    <div class="modal fade" id="loadingModal">
+        <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+            <div class="progress progress-striped active" style="margin-bottom: 0;">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+            <h5>正在查询...</h5>
+        </div>
+    </div>
+</body>
+<script src="./js/dhc_deal1.js"></script>
+</html>

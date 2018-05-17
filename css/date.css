@@ -1,0 +1,49 @@
+/*选择日期范围*/
+.form-group {
+    margin-left: 20px;
+    margin-top: 0px;
+    z-index: 5;
+}
+
+.form-group-title {
+    float: left;
+    display: block;
+    z-index: 5;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    color: black;
+}
+
+.input-group {
+    float: left;
+    display: block;
+    width: 800px;
+    margin-left: 10px;
+    z-index: 5;
+}
+
+.input-group .form-control-left {
+    float: left;
+    display: block;
+    width: 200px;
+    height: 32px;
+    z-index: 5;
+}
+
+.input-group .input-group-addon {
+    float: left;
+    display: block;
+    width: 10px;
+    height: 25px;
+    z-index: 5;
+}
+
+.input-group .form-control-right {
+    float: left;
+    display: block;
+    width: 200px;
+    height: 32px;
+    margin-top: 0px;
+    z-index: 5;
+}
